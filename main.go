@@ -1,11 +1,19 @@
 package main
 
 import (
+<<<<<<< HEAD
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"publicChain/BLC"
+=======
+	"fmt"
+	"log"
+	"publicChain/BLC"
+
+	"github.com/boltdb/bolt"
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
 )
 
 func main() {
@@ -20,6 +28,7 @@ func main() {
 	// fmt.Println(blockBytes)
 	// block1 := BLC.DeserializeBlock(blockBytes)
 	// fmt.Println(block1)
+<<<<<<< HEAD
 
 	cli := &CLI{}
 	cli.Run()
@@ -65,10 +74,41 @@ func main() {
 
 			return nil
 		})
+=======
+	/*
+		blockchain := BLC.CreateBlockChainWithGenesisBlock()
+		blockchain.AddBlockToBlockChain("Send 10 to B", blockchain.Blocks[len(blockchain.Blocks)-1].Height+1, blockchain.Blocks[len(blockchain.Blocks)-1].Hash)
+		blockchain.AddBlockToBlockChain("Send 10 to C", blockchain.Blocks[len(blockchain.Blocks)-1].Height+1, blockchain.Blocks[len(blockchain.Blocks)-1].Hash)
+		blockchain.AddBlockToBlockChain("Send 10 to D", blockchain.Blocks[len(blockchain.Blocks)-1].Height+1, blockchain.Blocks[len(blockchain.Blocks)-1].Hash)
+		blockchain.AddBlockToBlockChain("Send 10 to E", blockchain.Blocks[len(blockchain.Blocks)-1].Height+1, blockchain.Blocks[len(blockchain.Blocks)-1].Hash)
+	*/
+
+	block := BLC.NewBlock("Test", 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+	//打开数据库
+	// It will be created if it doesn't exist.mode代表权限 ，最大为777,可读1,可执行2,可写4
+	db, err := bolt.Open("block.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	//只写
+	err = db.Update(func(tx *bolt.Tx) error {
+		//获取表对象
+		bucket := tx.Bucket([]byte("blocks"))
+		if bucket == nil {
+			bucket, err = tx.CreateBucket([]byte("blocks"))
+			if err != nil {
+				log.Panic("Blocks table create failed: ", err)
+			}
+		}
+		err := bucket.Put([]byte("l"), block.Serialize())
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
 		if err != nil {
 			log.Panic(err)
 		}
 
+<<<<<<< HEAD
 		//只读
 		err = db.View(func(tx *bolt.Tx) error {
 			//获取表对象
@@ -99,6 +139,31 @@ flagPringtChainCmd := flag.String("printchain", "", "输出所有的区块信息
 
 	}
 */
+=======
+		return nil
+	})
+	if err != nil {
+		log.Panic(err)
+	}
+
+	//只读
+	err = db.View(func(tx *bolt.Tx) error {
+		//获取表对象
+		bucket := tx.Bucket([]byte("blocks1"))
+		if bucket == nil {
+			log.Panic(err)
+		}
+		blockdata := bucket.Get([]byte("l"))
+		fmt.Println(BLC.DeserializeBlock(blockdata))
+		return nil
+	})
+	if err != nil {
+		log.Panic(err)
+	}
+
+}
+
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
 /*
 //打开数据库
 db, err := bolt.Open("block.db", 0600, nil)
@@ -131,6 +196,7 @@ if bucket != nil {
 	fmt.Printf("%s\n", data)
 }
 */
+<<<<<<< HEAD
 
 //CLI
 type CLI struct {
@@ -218,3 +284,5 @@ func (cli *CLI) Run() {
 	}
 
 }
+=======
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de

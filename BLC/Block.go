@@ -63,9 +63,15 @@ func NewBlock(data string, height int64, preBlockHash []byte) *Block {
 	//block.SetHash()
 	//调用工作量证明方法，返回有效的Hash和Nonce值
 	pow := NewProofOfWork(block)
+<<<<<<< HEAD
 	//000000,符合hash的nonce,验证
 	hash, nonce := pow.Run()
 
+=======
+
+	//000000,符合hash的nonce,验证
+	hash, nonce := pow.Run()
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
 	block.Hash = hash[:]
 	block.Nonce = nonce
 	fmt.Println()
@@ -80,6 +86,7 @@ func CreateGenesisBlock(data string) *Block {
 	//调用工作量证明方法，返回有效的Hash和Nonce值
 	return block
 }
+<<<<<<< HEAD
 
 func SetHash(block *Block) {
 	pow := NewProofOfWork(block)
@@ -87,3 +94,5 @@ func SetHash(block *Block) {
 	block.Hash = hash[:]
 	block.Nonce = nonce
 }
+=======
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de

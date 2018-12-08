@@ -52,13 +52,20 @@ func (proofOfWork *ProofOfWork) Run() ([]byte, int64) {
 	for {
 		dataBytes := proofOfWork.prepareData(nonce)
 		hash = sha256.Sum256(dataBytes)
+<<<<<<< HEAD
 		//fmt.Printf("\r%x", hash)
 		fmt.Printf("mining---hash: %x\n", hash)
+=======
+		fmt.Printf("\r%x", hash)
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
 		//将hash存储到hashInt中
 		hashInt.SetBytes(hash[:])
 		//找到比难度小的hashInt，cmp大于=1,小于=-1
 		if proofOfWork.Target.Cmp(&hashInt) == 1 {
+<<<<<<< HEAD
 			fmt.Printf("mining success---hash: %x ", hash)
+=======
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
 			break
 		}
 		nonce = nonce + 1
