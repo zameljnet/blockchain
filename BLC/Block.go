@@ -2,7 +2,10 @@ package BLC
 
 import (
 	"bytes"
+<<<<<<< HEAD
 	"crypto/sha256"
+=======
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
 	"encoding/gob"
 	"fmt"
 	"log"
@@ -18,8 +21,14 @@ type Block struct {
 
 	Timestamp int64 //时间戳
 
+<<<<<<< HEAD
 	Nonce int64 //随机数
 	Txs   []*Transaction
+=======
+	Data []byte //数据
+
+	Nonce int64 //随机数
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
 }
 
 //设置区块HASH，需要通过block来调用
@@ -34,6 +43,7 @@ func (block *Block) SetHash() {
 }
 */
 
+<<<<<<< HEAD
 //将交易转化成字节数组
 func (block *Block) HashTransaction() []byte {
 	var txHashes [][]byte
@@ -45,6 +55,8 @@ func (block *Block) HashTransaction() []byte {
 	return txHash[:]
 }
 
+=======
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
 //将区块序列化
 func (block *Block) Serialize() []byte {
 	var result bytes.Buffer
@@ -69,6 +81,7 @@ func DeserializeBlock(blockBytes []byte) *Block {
 }
 
 //创建区块 引入包直接可以NewBlock
+<<<<<<< HEAD
 func NewBlock(txs []*Transaction, height int64, preBlockHash []byte) *Block {
 
 	block := &Block{Height: height, Hash: nil, PrevHash: preBlockHash, Timestamp: time.Now().Unix(), Txs: txs, Nonce: 0}
@@ -84,18 +97,45 @@ func NewBlock(txs []*Transaction, height int64, preBlockHash []byte) *Block {
 
 	//go SetHash(block)
 
+=======
+func NewBlock(data string, height int64, preBlockHash []byte) *Block {
+	block := &Block{Height: height, Hash: nil, PrevHash: preBlockHash, Timestamp: time.Now().Unix(), Data: []byte(data), Nonce: 0}
+	//block.SetHash()
+	//调用工作量证明方法，返回有效的Hash和Nonce值
+	pow := NewProofOfWork(block)
+<<<<<<< HEAD
+	//000000,符合hash的nonce,验证
+	hash, nonce := pow.Run()
+
+=======
+
+	//000000,符合hash的nonce,验证
+	hash, nonce := pow.Run()
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
+	block.Hash = hash[:]
+	block.Nonce = nonce
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
 	fmt.Println()
 	fmt.Println("Block:", block)
 	return block
 }
 
 //创建创世区块
+<<<<<<< HEAD
 func CreateGenesisBlock(txs []*Transaction) *Block {
 	block := NewBlock(txs, 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+=======
+func CreateGenesisBlock(data string) *Block {
+	block := NewBlock(data, 1, []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
 	//block.SetHash()
 	//调用工作量证明方法，返回有效的Hash和Nonce值
 	return block
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
 
 func SetHash(block *Block) {
 	pow := NewProofOfWork(block)
@@ -103,3 +143,8 @@ func SetHash(block *Block) {
 	block.Hash = hash[:]
 	block.Nonce = nonce
 }
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 6f0bdfe282c989920a0911c550946d37c54924de
+>>>>>>> 6fb89150a277ef0b9a9dcaa6e5acd74d7d5e8b8a
