@@ -1,5 +1,6 @@
 # blockchain
-v1.0 simple blockchain demo using go
+v1.1 blockchain demo using go with data persistence to support blockchain
+Key-Value database: boltdb
 # Quick Test
 The following command will run the entire process (code build and run ).
 
